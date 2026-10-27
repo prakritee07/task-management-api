@@ -1,76 +1,70 @@
-\# Task Management API
+# Task Management API
 
+A REST API built with Python, FastAPI, and SQLite to manage tasks. This project demonstrates API development, CRUD operations, database storage, and automated testing.
 
+## Features
 
-A beginner Python project built using FastAPI.
+- View all tasks
+- Create a task
+- View a task by ID
+- Update a task
+- Delete a task
+- Return a 404 response when a task does not exist
+- Store tasks in SQLite
+- Run automated API tests with pytest
 
+## Technologies Used
 
+- Python
+- FastAPI
+- SQLite
+- Pytest
+- Git and GitHub
 
-\## About
+## Setup
 
+1. Clone the repository:
 
+   `git clone https://github.com/prakritee07/task-management-api.git`
 
-This project is a simple REST API for managing tasks. It allows users to create, view, update, and delete tasks.
+2. Enter the project folder:
 
+   `cd task-management-api`
 
+3. Create a virtual environment:
 
-\## Features
+   `python -m venv .venv`
 
+4. Activate it on Windows:
 
+   `.venv\Scripts\activate`
 
-\- View all tasks
+5. Install dependencies:
 
-\- Create a new task
+   `python -m pip install -r requirements.txt`
 
-\- View a task by ID
+## Run the API
 
-\- Update a task
+Start the server:
 
-\- Delete a task
+`python -m uvicorn main:app --reload`
 
+Open the interactive API documentation:
 
+http://127.0.0.1:8000/docs
 
-\## Technologies Used
+## Run Automated Tests
 
+Run:
 
+`python -m pytest -v`
 
-\- Python
+The test suite checks the home endpoint, task retrieval, task creation, task updates, deletion, and missing-task handling.
 
-\- FastAPI
+## Database
 
-\- Uvicorn
+Tasks are stored in `tasks.db`, which is created automatically when the application runs. The database file is excluded from Git so that local task data is not uploaded to the repository. Automated tests use a separate temporary database.
 
+## Project Status
 
-
-\## How to Run
-
-
-
-1\. Install the required packages:
-
-
-
-&#x20;  `pip install -r requirements.txt`
-
-
-
-2\. Start the API:
-
-
-
-&#x20;  `uvicorn main:app --reload`
-
-
-
-3\. Open the API documentation:
-
-
-
-&#x20;  `http://127.0.0.1:8000/docs`
-
-
-
-\## Note
-
-Tasks are stored in an SQLite database (`tasks.db`), so they remain saved when the application restarts. The database file is created automatically when the application runs.
-
+This is a learning project that I developed to practice Python backend development, REST APIs, database integration, and automated testing.
