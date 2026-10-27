@@ -1,9 +1,10 @@
-
+import os
 import sqlite3
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 app = FastAPI()
+DATABASE_PATH = os.getenv("TASKS_DB_PATH", "tasks.db")
 
 
 class Task(BaseModel):
@@ -12,7 +13,7 @@ class Task(BaseModel):
 
 
 def create_table():
-    conn = sqlite3.connect("tasks.db")
+    conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
 
     cursor.execute("""
@@ -48,7 +49,7 @@ def home():
 
 @app.get("/tasks")
 def get_tasks():
-    conn = sqlite3.connect("tasks.db")
+    conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
     cursor.execute("SELECT id, title, completed FROM tasks")
     rows = cursor.fetchall()
@@ -66,7 +67,7 @@ def get_tasks():
 
 @app.post("/tasks")
 def create_task(task: Task):
-    conn = sqlite3.connect("tasks.db")
+    conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -87,7 +88,7 @@ def create_task(task: Task):
 
 @app.get("/tasks/{task_id}")
 def get_task(task_id: int):
-    conn = sqlite3.connect("tasks.db")
+    conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -109,7 +110,7 @@ def get_task(task_id: int):
 
 @app.put("/tasks/{task_id}")
 def update_task(task_id: int, updated_task: Task):
-    conn = sqlite3.connect("tasks.db")
+    conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
 
     cursor.execute(
@@ -137,7 +138,7 @@ def update_task(task_id: int, updated_task: Task):
 
 @app.delete("/tasks/{task_id}")
 def delete_task(task_id: int):
-    conn = sqlite3.connect("tasks.db")
+    conn = sqlite3.connect(DATABASE_PATH)
     cursor = conn.cursor()
 
     cursor.execute("DELETE FROM tasks WHERE id = ?", (task_id,))

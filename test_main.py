@@ -1,3 +1,16 @@
+import os
+import tempfile
+
+TEST_DB_PATH = os.path.join(
+    tempfile.gettempdir(),
+    "task_management_test.db"
+)
+
+if os.path.exists(TEST_DB_PATH):
+    os.remove(TEST_DB_PATH)
+
+os.environ["TASKS_DB_PATH"] = TEST_DB_PATH
+
 from fastapi.testclient import TestClient
 from main import app
 
@@ -54,10 +67,17 @@ def test_task_crud_flow():
         response = client.delete(f"/tasks/{task_id}")
         assert response.status_code == 200
 
-        # Confirm that the task no longer exists
+        # Confirm that the task was deleted
         response = client.get(f"/tasks/{task_id}")
         assert response.status_code == 404
 
     finally:
         # Clean up the test task if it still exists
         client.delete(f"/tasks/{task_id}")
+
+
+def test_missing_task_returns_404():
+    response = client.get("/tasks/987654321")
+
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Task not found"}
