@@ -72,7 +72,5 @@ This project is a simple REST API for managing tasks. It allows users to create,
 
 \## Note
 
-
-
-Tasks are currently stored in memory and reset when the application restarts. Database storage may be added in a future version.
+Tasks are stored in an SQLite database (`tasks.db`), so they remain saved when the application restarts. The database file is created automatically when the application runs.
 
